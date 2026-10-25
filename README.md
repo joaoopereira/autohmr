@@ -31,7 +31,10 @@ python3 -m http.server 8000 -d public
    - Build command: *(empty)*
    - Build output directory: `public`
 4. **Save and Deploy**.
-5. Under **Custom domains**, add `autohmr.pt` (and `www.autohmr.pt`).
+5. Under **Custom domains**, add `autohmr.pt` and `www.autohmr.pt`.
+6. Redirect `www.autohmr.pt` to `autohmr.pt` so only one host is indexed: in the `autohmr.pt` zone, **Rules** → **Redirect Rules** → template *Redirect from WWW to root* (301, preserve path and query string).
+
+`public/_headers` sends `X-Robots-Tag: noindex` on `*.pages.dev`, so the production alias and preview deployments stay out of search results.
 
 Every push to the production branch deploys automatically; other branches get preview deployments.
 
