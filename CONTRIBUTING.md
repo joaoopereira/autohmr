@@ -52,21 +52,26 @@ Recommended repository settings (GitHub → Settings):
 
 - **General → Pull Requests**: disable *Allow merge commits*; keep *Allow squash merging* and *Allow rebase merging*.
 - **Rules / Branch protection** for `main` and `development`: enable *Require linear history* and require the `Commit lint` check.
-- **Actions → General**: enable *Allow GitHub Actions to create and approve pull requests* (needed by the release workflow).
 
 ## Branches
 
 - `main` — production; Cloudflare Pages deploys it to `autohmr.pt`.
-- `development` — integration branch; changes land here first and reach `main` by fast-forward (or rebase).
+- `development` — integration branch; all changes land here first.
 
-## Versioning and changelog
+## Releases and changelog
 
-The project uses [Semantic Versioning](https://semver.org/). The current version is in `version.txt` and the release history in `CHANGELOG.md`.
+A release is promoting `development` to `main`. Versions follow [Semantic Versioning](https://semver.org/) and are recorded in `CHANGELOG.md`, generated from the commits with [git-cliff](https://git-cliff.org/) (config in `cliff.toml`).
 
-Releases are generated automatically with [release-please](https://github.com/googleapis/release-please) from the commit history:
+1. On `development`, pick the next version (`feat` → minor, `fix`/`perf` → patch, breaking change → major) and add its changelog section:
+   ```sh
+   scripts/changelog.sh 1.1.0
+   git add CHANGELOG.md
+   git commit -m "chore(release): 1.1.0"
+   git push origin development
+   ```
+2. Fast-forward `main` to `development`:
+   ```sh
+   git push origin development:main
+   ```
 
-1. On every push to `main`, the `Release` workflow opens (or updates) a release PR titled `chore(main): release X.Y.Z`, which bumps `version.txt` and adds the new section to `CHANGELOG.md` from the `feat`, `fix`, `perf` and `revert` commits since the last release.
-2. Merging that PR (squash) creates the `vX.Y.Z` tag and the GitHub release.
-3. Bring `development` back in line with `main` afterwards (`git checkout development && git rebase origin/main && git push`).
-
-Never edit released `CHANGELOG.md` sections by hand; fix the commit history going forward instead.
+The script lists the `feat`, `fix`, `perf` and `revert` commits since the last `chore(release)` commit, so that commit message format matters. Don't edit released sections of `CHANGELOG.md` by hand.
