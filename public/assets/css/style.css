@@ -106,6 +106,7 @@ p { margin: 0 0 1em; }
 .section-dark { background: var(--ink); color: #cfd6e2; }
 .section-dark h2, .section-dark h3 { color: #fff; }
 .section-dark .eyebrow { color: #8fb0e8; }
+.section-soft { background: var(--bg-soft); }
 
 /* Services */
 .cards {
@@ -128,6 +129,24 @@ p { margin: 0 0 1em; }
 .feature { border-top: 2px solid rgba(255, 255, 255, .12); padding-top: 24px; }
 .feature p { margin: 0; }
 .feature-num { display: block; font-weight: 800; font-size: 1.6rem; color: var(--grey); margin-bottom: 12px; }
+
+/* FAQ */
+.faq { display: grid; gap: 12px; max-width: 760px; }
+.faq details {
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0 24px;
+}
+.faq summary {
+  cursor: pointer; list-style: none; padding: 20px 32px 20px 0; position: relative;
+  font-weight: 600; color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  font-size: 1.4rem; font-weight: 400; color: var(--blue);
+}
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin: 0 0 20px; color: var(--muted); }
 
 /* Contacts */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
