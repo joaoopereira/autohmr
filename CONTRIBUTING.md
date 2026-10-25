@@ -3,7 +3,7 @@
 ## Language
 
 Everything in the repository is written in English: commit messages, branch names, pull requests, code comments, the README and any other written instructions or docs.
-The only exception is the website content itself (the text visitors read in `index.html`), which is in Portuguese.
+The only exception is the website content itself (the text visitors read in `public/index.html`), which is in Portuguese.
 
 ## Commit messages
 

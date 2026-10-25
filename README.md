@@ -4,17 +4,21 @@ Single-page website for the **Auto HMR — Reparação e Comércio Automóvel** 
 
 Static HTML + CSS, no build step.
 
+Only `public/` is deployed; everything else (docs, scripts, tooling) stays out of the site.
+
 ```
-index.html            page
-assets/css/style.css  styles (brand colours in :root)
-assets/img/           logo (SVG), favicon and social sharing image
-_headers              HTTP headers for Cloudflare Pages
+public/
+  index.html            page
+  assets/css/style.css  styles (brand colours in :root)
+  assets/img/           logo (SVG), favicon and social sharing image
+  _headers              HTTP headers for Cloudflare Pages
+  robots.txt, sitemap.xml
 ```
 
 ## Local development
 
 ```sh
-python3 -m http.server 8000
+python3 -m http.server 8000 -d public
 # open http://localhost:8000
 ```
 
@@ -25,17 +29,17 @@ python3 -m http.server 8000
 3. Build settings:
    - Framework preset: **None**
    - Build command: *(empty)*
-   - Build output directory: `/`
+   - Build output directory: `public`
 4. **Save and Deploy**.
 5. Under **Custom domains**, add `autohmr.pt` (and `www.autohmr.pt`).
 
 Every push to the production branch deploys automatically; other branches get preview deployments.
 
-CLI alternative: `npx wrangler pages deploy . --project-name autohmr`.
+CLI alternative: `npx wrangler pages deploy public --project-name autohmr`.
 
 ## Editing content
 
-The address, phone number, email and opening hours live in `index.html` (the `#contactos` section) and also in the JSON-LD block in `<head>` — update both.
+The address, phone number, email and opening hours live in `public/index.html` (the `#contactos` section) and also in the JSON-LD block in `<head>` — update both.
 
 The site content itself is in Portuguese; everything else in the repository (code, comments, docs, commits) is in English.
 
